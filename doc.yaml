@@ -82,7 +82,7 @@ components:
         frozen:
           type: integer
           description: 冻结可租房
-        rentableRentedRate:
+        rentAbleRentedRate:
           type: number
           description: 可租房源出租率
         module:
