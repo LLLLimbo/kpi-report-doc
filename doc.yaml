@@ -1,0 +1,467 @@
+openapi: 3.0.0
+info:
+  title: 片区房态表
+  version: '1.0'
+  description: 片区房态表
+servers:
+  - url: 'http://localhost:20599/kpi-report'
+paths:
+  /unitHouseStatics:
+    post:
+      summary: ''
+      operationId: post-unitHouseStatics
+      responses:
+        '200':
+          description: OK
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+components:
+  schemas:
+    HouseStaticsRequest:
+      title: HouseStaticsRequest
+      type: object
+      description: 片区/公司房态表请求体
+      properties:
+        userId:
+          type: string
+        unitId:
+          type: string
+        houseType:
+          type: array
+          items:
+            type: string
+        companyId:
+          type: string
+        date:
+          type: integer
+        pageCount:
+          type: integer
+        pageSize:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        groupBy:
+          type: string
+          enum:
+            - UNIT
+            - COMPANY
+    OrderByEntity:
+      title: OrderByEntity
+      type: object
+      properties:
+        kpiName:
+          type: string
+        order:
+          type: string
+          enum:
+            - DESC
+            - ASC
+      description: 排序
+    HouseStaticsReturn:
+      title: HouseStaticsReturn
+      type: object
+      description: |
+        片区/公司房态表的接口返回体
+      properties:
+        groupByColumnName:
+          type: string
+        empty:
+          type: integer
+          description: 空置可租房
+        locked:
+          type: integer
+          description: 锁定可租房
+        rented:
+          type: integer
+          description: 已出租可租房
+        frozen:
+          type: integer
+          description: 冻结可租房
+        rentableRentedRate:
+          type: number
+          description: 可租房源出租率
+        module:
+          type: integer
+          description: 样板房
+        retain:
+          type: integer
+          description: 留用房
+        idle:
+          type: integer
+          description: 闲置房
+        operational:
+          type: integer
+          description: 已运营
+        inoperational:
+          type: integer
+          description: 待运营
+        total:
+          type: integer
+          description: 系统内总间数
+        totalRentedRate:
+          type: number
+          description: 总体出租率
+    ReturnBody:
+      title: ReturnBody
+      type: object
+      description: 通用的返回体
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+        firstResult:
+          type: string
+        segment:
+          type: array
+          items:
+            type: integer
+        firstPage:
+          type: boolean
+        lastPage:
+          type: boolean
+        nextPage:
+          type: integer
+        prePage:
+          type: integer
+    OvernightRentalRateRequest:
+      title: OvernightRentalRateRequest
+      type: object
+      description: 片区/公司间夜出租率表请求体
+      properties:
+        userId:
+          type: string
+        unitId:
+          type: string
+        companyId:
+          type: string
+        startDate:
+          type: integer
+        endDate:
+          type: integer
+        houseType:
+          type: array
+          items:
+            type: string
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        groupBy:
+          type: string
+        pageCount:
+          type: integer
+        pageSize:
+          type: integer
+    OvernightRentalRateReturn:
+      title: OvernightRentalRateReturn
+      type: object
+      description: 片区/公司间夜出租率表返回体
+      properties:
+        groupByColumnName:
+          type: string
+        operationalOvernight:
+          type: integer
+          description: 已运营间夜数
+        rentedOvernight:
+          type: integer
+          description: 实际出租间夜
+        overnightRentalRate:
+          type: number
+          description: 间夜出租率
+        averageRental:
+          type: number
+          description: 平均租金
+    NewSignStaticsRequest:
+      title: NewSignStaticsRequest
+      type: object
+      description: 新签间数表请求体
+      properties:
+        userId:
+          type: string
+        unitId:
+          type: string
+        houseType:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+    NewSignStaticsReturn:
+      title: NewSignStaticsReturn
+      type: object
+      properties:
+        groupByColumnName:
+          type: string
+        newSignCount:
+          type: integer
+          description: 新签合同间数
+        newSignOvernight:
+          type: integer
+          description: 新签合同总间夜数
+    NewSignDetailsRequest:
+      title: NewSignDetailsRequest
+      type: object
+      description: 新签间数每日明细表查询
+      properties:
+        userId:
+          type: string
+        unitId:
+          type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        houseType:
+          type: array
+          items:
+            type: string
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+    NewSignDetailsReturn:
+      title: NewSignDetailsReturn
+      type: array
+      items:
+        type: object
+        properties:
+          aggregateTargetName:
+            type: string
+          targetValues:
+            type: array
+            items:
+              type: integer
+      x-examples:
+        example-1:
+          - aggregateTargetName: 杭州公司
+            targetValues:
+              - 100
+              - 20
+              - 30
+              - 50
+              - 20
+          - aggregateTargetName: 杭州公司
+            targetValues:
+              - 100
+              - 20
+              - 30
+              - 50
+              - 20
+    SalerNewSignRequest:
+      title: SalerNewSignRequest
+      type: object
+      description: 销售新签间数表请求体
+      properties:
+        userId:
+          type: string
+        houseType:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+    SalerNewSignReturn:
+      title: SalerNewSignReturn
+      type: object
+      description: 销售新签间数返回体
+      properties:
+        groupByColumnName:
+          type: string
+        newSignCount:
+          type: integer
+          description: 新签合同间数
+        newSignTotalAmount:
+          type: number
+          description: 签约合同总金额
+    RefundStaticsRequest:
+      title: RefundStaticsRequest
+      type: object
+      description: 片区/公司退租间数表请求体
+      properties:
+        userId:
+          type: string
+        houseType:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        groupBy:
+          type: string
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+        unitId:
+          type: string
+    RefundStaticsReturn:
+      title: RefundStaticsReturn
+      type: object
+      description: 片区/公司退租间数返回体
+      properties:
+        groupByColumnName:
+          type: string
+        totalRefundCount:
+          type: integer
+          description: 合计退租间数
+        normalRefundCount:
+          type: integer
+          description: 正常退租间数
+        innormalRefundCount:
+          type: integer
+          description: 违约退租间数
+        subletRefundCount:
+          type: integer
+          description: 转租结束间数
+        changeRefundCount:
+          type: integer
+          description: 换房结束间数
+        renewRefundCount:
+          type: integer
+          description: 续租结束间数
+    SatisfactionScoresRequest:
+      title: SatisfactionScoresRequest
+      type: object
+      description: 满意度评分数据表请求体
+      properties:
+        userId:
+          type: string
+        unitId:
+          type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+    SatisfactionScoresReturn:
+      title: SatisfactionScoresReturn
+      type: object
+      description: 满意度评分数据表返回体
+      properties:
+        groupByColumnName:
+          type: string
+        socre:
+          type: number
+    SignApprovalRequest:
+      title: SignApprovalRequest
+      type: object
+      description: 新签/续租审批数表请求体
+      properties:
+        userId:
+          type: string
+        unitId:
+          type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+        houseType:
+          type: array
+          items:
+            type: string
+    NewSignApprovalReturn:
+      title: NewSignApprovalReturn
+      type: object
+      description: 新签审批数表返回体
+      properties:
+        groupByColumnName:
+          type: string
+        nsSalesManager:
+          type: integer
+          description: 销售经理审批新签合同数
+        nsGeneralManager:
+          type: integer
+          description: 总经理审批新签合同数
+    RenewSignApprovalReturn:
+      title: RenewSignApprovalReturn
+      type: object
+      description: 续租审批数
+      properties:
+        groupByColumnName:
+          type: string
+        rnsApartmentManager:
+          type: integer
+          description: 公寓经理审批续租合同数
+        rnsGeneralManager:
+          type: integer
+          description: 总经理审批续租合同数
+    SignStaticsRequest:
+      title: SignStaticsRequest
+      type: object
+      description: 片区/公司签约间数表请求体
+      properties:
+        userId:
+          type: string
+        houseType:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        orderBy:
+          $ref: '#/components/schemas/OrderByEntity'
+        unitId:
+          type: string
+        companyId:
+          type: string
+        groupBy:
+          type: string
+        pageSize:
+          type: integer
+        pageCount:
+          type: integer
+    SignStaticsReturn:
+      title: SignStaticsReturn
+      type: object
+      description: 片区/公司签约间数表返回体
+      properties:
+        groupByColumnName:
+          type: string
+        signCount:
+          type: integer
+          description: 签约合同间数
+        signTotalAmount:
+          type: number
+          description: 签约合同总金额
+  securitySchemes: {}
