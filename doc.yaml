@@ -29,8 +29,10 @@ components:
       properties:
         userId:
           type: string
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         houseType:
           type: array
           items:
@@ -140,8 +142,10 @@ components:
       properties:
         userId:
           type: string
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         companyId:
           type: string
         startDate:
@@ -186,8 +190,10 @@ components:
       properties:
         userId:
           type: string
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         houseType:
           type: array
           items:
@@ -222,8 +228,10 @@ components:
       properties:
         userId:
           type: string
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         startTime:
           type: integer
         endTime:
@@ -321,8 +329,10 @@ components:
           type: integer
         pageCount:
           type: integer
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         companyId:
           type: string
     RefundStaticsReturn:
@@ -357,8 +367,10 @@ components:
       properties:
         userId:
           type: string
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         startTime:
           type: integer
         endTime:
@@ -376,7 +388,7 @@ components:
       properties:
         groupByColumnName:
           type: string
-        socre:
+        score:
           type: number
     SignApprovalRequest:
       title: SignApprovalRequest
@@ -385,8 +397,10 @@ components:
       properties:
         userId:
           type: string
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         startTime:
           type: integer
         endTime:
@@ -444,8 +458,10 @@ components:
           type: integer
         orderBy:
           $ref: '#/components/schemas/OrderByEntity'
-        unitId:
-          type: string
+        unitIds:
+          type: array
+          items:
+            type: string
         companyId:
           type: string
         groupBy:
