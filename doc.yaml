@@ -286,7 +286,7 @@ components:
         pageCount:
           type: integer
     SalerNewSignReturn:
-      title: SalerNewSignReturn
+      title: SalesNewSignReturn
       type: object
       description: 销售新签间数返回体
       properties:
